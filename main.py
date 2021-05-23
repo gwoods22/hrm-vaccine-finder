@@ -30,34 +30,36 @@ def main():
     openAppts = list(filter(lambda x: not x['fullyBooked'], appts))
     hrmAppts = list(filter(lambda x: x['gisLocationString'].split(', ')[3] == 'Halifax County', openAppts))
 
-    output = hrmAppts
-    # output = list(map(lambda x: x['gisLocationString'], openAppts))
-    output.sort(key=lambda x: x['gisLocationString'])
+    # hrmAppts = list(map(lambda x: x['gisLocationString'], openAppts))
+    hrmAppts.sort(key=lambda x: x['gisLocationString'])
 
     myAppts = []
 
-    for i in range(1, len(output)):
+    for i in range(1, len(hrmAppts)):
         apptsUrl = 'https://sync-cf2-1.canimmunize.ca/fhir/v1/public/availability/17430812-2095-4a35-a523-bb5ce45d60f1?appointmentTypeId={}&timezone=America%2FHalifax&preview=false'
-        url = apptsUrl.format(output[i]['id'])
+        url = apptsUrl.format(hrmAppts[i]['id'])
 
         response = requests.request("GET", url, headers=headers, data=payload)
 
-        clinicName = output[i]['clinicName'].split(' - ')
+        clinicName = hrmAppts[i]['clinicName'].split(' - ')
 
-        apptTime = response.json()[0]['availabilities'][0]['time']
+        appts = response.json()[0]['availabilities']
         
-        obj = {}
-        obj['utcTime'] = apptTime,
-        obj['apptTime'] = getLocal(apptTime),
-        obj['id'] = output[i]['id'],
-        obj['address'] = output[i]['gisLocationString'],
-        if len(clinicName) == 3:
-            obj['vaccine'] = clinicName[2],
-            obj['name'] = clinicName[1]
-        else:
-            obj['name'] = ' '.join(clinicName)
+        for appt in appts:
+            apptTime = appt['time']
 
-        myAppts.append(obj)
+            obj = {}
+            obj['utcTime'] = apptTime,
+            obj['apptTime'] = getLocal(apptTime),
+            obj['id'] = hrmAppts[i]['id'],
+            obj['address'] = hrmAppts[i]['gisLocationString'],
+            if len(clinicName) == 3:
+                obj['vaccine'] = clinicName[2],
+                obj['name'] = clinicName[1]
+            else:
+                obj['name'] = ' '.join(clinicName)
+
+            myAppts.append(obj)
 
     myAppts.sort(key=lambda x: x['utcTime'])
 
