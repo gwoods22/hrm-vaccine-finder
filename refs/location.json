@@ -1,0 +1,38 @@
+{
+    "id": "b999e9a5-e78d-42ab-b043-8bc917cf3a67",
+    "status": "active",
+    "noAvailabilityTimestamp": null,
+    "fullyBooked": false,
+    "appointmentTypeId": "b999e9a5-e78d-42ab-b043-8bc917cf3a67",
+    "name": {
+        "en": "Bedford - Shoppers Drug Mart 2023 - COVID-19 Dose 1: People Age 25 and over (Pfizer)",
+        "fr": "Bedford - Shoppers Drug Mart 2023 - COVID-19 Dose 1: People Age 25 and over (Pfizer)"
+    },
+    "location": {},
+    "duration": null,
+    "durationDisplay": {
+        "en": "20 Dellridge Lane, Bedford",
+        "fr": "20 Dellridge Lane, Bedford"
+    },
+    "durationDisplayEn": "20 Dellridge Lane, Bedford",
+    "durationDisplayFr": "20 Dellridge Lane, Bedford",
+    "minAge": 25,
+    "maxAge": null,
+    "ageEligibilityErrorMessage": {
+        "en": "We are not accepting appointments for your age group at this time.",
+        "fr": "We are not accepting appointments for your age group at this time."
+    },
+    "ageEligibilityErrorMessageEn": "We are not accepting appointments for your age group at this time.",
+    "ageEligibilityErrorMessageFr": "We are not accepting appointments for your age group at this time.",
+    "numberOfPatients": 1,
+    "nameEn": "Bedford - Shoppers Drug Mart 2023 - COVID-19 Dose 1: People Age 25 and over (Pfizer)",
+    "nameFr": "Bedford - Shoppers Drug Mart 2023 - COVID-19 Dose 1: People Age 25 and over (Pfizer)",
+    "eligibleBirthMonths": null,
+    "calendars": [],
+    "vaccineConceptId": "28581000087106",
+    "gisX": 445558,
+    "gisY": 4949983,
+    "gisLocationString": "20 Dellridge Lane, Bedford, Halifax Regional Municipality, Halifax County",
+    "clinicName": "Bedford - Shoppers Drug Mart 2023 (Dellridge Lane) - Pfizer",
+    "mapsLocationString": "20 Dellridge Ln, Bedford, NS B4A 0H1"
+}
