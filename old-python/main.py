@@ -25,8 +25,8 @@ def main():
 
     response = requests.request("GET", locationsUrl, headers=headers)
 
-    # allAppts = response.json()['results']
-    allAppts = json.loads( response.data )['results']
+    allAppts = response.json()['results']
+    # allAppts = json.loads( response.data )['results']
     
     openAppts = list(filter(lambda x: not x['fullyBooked'], allAppts))
     hrmAppts = list(filter(lambda x: x['gisLocationString'].split(', ')[3] == 'Halifax County', openAppts))
@@ -41,8 +41,8 @@ def main():
 
         clinicName = hrmAppts[i]['clinicName'].split(' - ')
 
-        # appts = response.json()[0]['availabilities']
-        appts = json.loads( response.data )[0]['availabilities']
+        appts = response.json()[0]['availabilities']
+        # appts = json.loads( response.data )[0]['availabilities']
         
         for appt in appts:
             apptTime = appt['time']
@@ -62,7 +62,8 @@ def main():
 
     myAppts.sort(key=lambda x: x['utcTime'])
 
-    return myAppts
+    with open('appts.json', 'w') as outfile:
+        json.dump(myAppts, outfile)
         
 
     print('-------------\n{} locations\n{} w/ appointments\n{} in HRM'.format(len(allAppts), len(openAppts), len(hrmAppts)))
