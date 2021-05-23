@@ -1,4 +1,4 @@
-# b
+# vaccine-appts
 
 ## Project setup
 ```
