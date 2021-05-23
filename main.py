@@ -13,7 +13,6 @@ def getLocal(utc_datetime):
 def main():
     locationsUrl = 'https://sync-cf2-1.canimmunize.ca/fhir/v1/public/booking-page/17430812-2095-4a35-a523-bb5ce45d60f1/appointment-types?forceUseCurrentAppointment=false&preview=false'
 
-    payload={}
     headers = {
     'authority': 'sync-cf2-1.canimmunize.ca',
     'accept': 'application/json, text/plain, */*',
@@ -24,14 +23,13 @@ def main():
 
     
 
-    response = requests.request("GET", locationsUrl, headers=headers, data=payload)
+    response = requests.request("GET", locationsUrl, headers=headers)
 
-    appts = response.json()['results']
-    openAppts = list(filter(lambda x: not x['fullyBooked'], appts))
+    allAppts = response.json()['results']
+    # allAppts = json.loads( response.data )['results']
+    
+    openAppts = list(filter(lambda x: not x['fullyBooked'], allAppts))
     hrmAppts = list(filter(lambda x: x['gisLocationString'].split(', ')[3] == 'Halifax County', openAppts))
-
-    # hrmAppts = list(map(lambda x: x['gisLocationString'], openAppts))
-    hrmAppts.sort(key=lambda x: x['gisLocationString'])
 
     myAppts = []
 
@@ -39,11 +37,12 @@ def main():
         apptsUrl = 'https://sync-cf2-1.canimmunize.ca/fhir/v1/public/availability/17430812-2095-4a35-a523-bb5ce45d60f1?appointmentTypeId={}&timezone=America%2FHalifax&preview=false'
         url = apptsUrl.format(hrmAppts[i]['id'])
 
-        response = requests.request("GET", url, headers=headers, data=payload)
+        response = requests.request("GET", url, headers=headers)
 
         clinicName = hrmAppts[i]['clinicName'].split(' - ')
 
         appts = response.json()[0]['availabilities']
+        # appts = json.loads( response.data )[0]['availabilities']
         
         for appt in appts:
             apptTime = appt['time']
@@ -63,11 +62,10 @@ def main():
 
     myAppts.sort(key=lambda x: x['utcTime'])
 
-    with open('appts.json', 'w') as outfile:
-        json.dump(myAppts, outfile)
+    return myAppts
         
 
-    print('-------------\n{} locations\n{} w/ appointments\n{} in HRM'.format(len(appts), len(openAppts), len(hrmAppts)))
+    print('-------------\n{} locations\n{} w/ appointments\n{} in HRM'.format(len(allAppts), len(openAppts), len(hrmAppts)))
 
 if __name__ == "__main__":
     main()
