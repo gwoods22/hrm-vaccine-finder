@@ -1,0 +1,78 @@
+{
+    "dupes": [{
+        "id": "25855e6c-8478-4431-859d-81045a669da0",
+        "status": "active",
+        "noAvailabilityTimestamp": "None",
+        "fullyBooked": "False",
+        "appointmentTypeId": "25855e6c-8478-4431-859d-81045a669da0",
+        "name": {
+            "en": "Halifax - Specialty Rx Pharmacy - COVID-19 Dose 1: People Age 25 and over (Pfizer)",
+            "fr": "Halifax - Specialty Rx Pharmacy - COVID-19 Dose 1: People Age 25 and over (Pfizer)"
+        },
+        "location": {},
+        "duration": 10,
+        "durationDisplay": {
+            "en": "2nd Floor Halifax Professional Centre, Suite 285, 5991 Spring Garden Road, Halifax",
+            "fr": "2nd Floor Halifax Professional Centre, Suite 285, 5991 Spring Garden Road, Halifax"
+        },
+        "durationDisplayEn": "2nd Floor Halifax Professional Centre, Suite 285, 5991 Spring Garden Road, Halifax",
+        "durationDisplayFr": "2nd Floor Halifax Professional Centre, Suite 285, 5991 Spring Garden Road, Halifax",
+        "minAge": 25,
+        "maxAge": "None",
+        "ageEligibilityErrorMessage": {
+            "en": "We are not accepting appointments for your age group at this time.",
+            "fr": "We are not accepting appointments for your age group at this time."
+        },
+        "ageEligibilityErrorMessageEn": "We are not accepting appointments for your age group at this time.",
+        "ageEligibilityErrorMessageFr": "We are not accepting appointments for your age group at this time.",
+        "numberOfPatients": 1,
+        "nameEn": "Halifax - Specialty Rx Pharmacy - COVID-19 Dose 1: People Age 25 and over (Pfizer)",
+        "nameFr": "Halifax - Specialty Rx Pharmacy - COVID-19 Dose 1: People Age 25 and over (Pfizer)",
+        "eligibleBirthMonths": "None",
+        "calendars": [],
+        "vaccineConceptId": "28581000087106",
+        "gisX": 453468,
+        "gisY": 4943251,
+        "gisLocationString": "5991 Spring Garden Rd, Halifax, Halifax Regional Municipality, Halifax County",
+        "clinicName": "Halifax - SRx Pharmacy (Halifax Professional Centre) - Pfizer",
+        "mapsLocationString": "5991 Spring Garden Rd Suite 285, Halifax, NS B3H 4R7"
+    }, {
+        "id": "a6df6359-9a5c-48bd-9a19-89e98d043ef3",
+        "status": "active",
+        "noAvailabilityTimestamp": "None",
+        "fullyBooked": "False",
+        "appointmentTypeId": "a6df6359-9a5c-48bd-9a19-89e98d043ef3",
+        "name": {
+            "en": "Halifax - Lawtons Drugs 132 - COVID-19 Dose 1: People Age 25 and over (Pfizer)",
+            "fr": "Halifax - Lawtons Drugs 132 - COVID-19 Dose 1: People Age 25 and over (Pfizer)"
+        },
+        "location": {},
+        "duration": "None",
+        "durationDisplay": {
+            "en": "Spring Garden Professional Centre (Corner of Robie and Spring Garden), 5991 Spring Garden Road, Halifax",
+            "fr": "Spring Garden Professional Centre (Corner of Robie and Spring Garden), 5991 Spring Garden Road, Halifax"
+        },
+        "durationDisplayEn": "Spring Garden Professional Centre (Corner of Robie and Spring Garden), 5991 Spring Garden Road, Halifax",
+        "durationDisplayFr": "Spring Garden Professional Centre (Corner of Robie and Spring Garden), 5991 Spring Garden Road, Halifax",
+        "minAge": 25,
+        "maxAge": "None",
+        "ageEligibilityErrorMessage": {
+            "en": "We are not accepting appointments for your age group at this time.",
+            "fr": "We are not accepting appointments for your age group at this time."
+        },
+        "ageEligibilityErrorMessageEn": "We are not accepting appointments for your age group at this time.",
+        "ageEligibilityErrorMessageFr": "We are not accepting appointments for your age group at this time.",
+        "numberOfPatients": 1,
+        "nameEn": "Halifax - Lawtons Drugs 132 - COVID-19 Dose 1: People Age 25 and over (Pfizer)",
+        "nameFr": "Halifax - Lawtons Drugs 132 - COVID-19 Dose 1: People Age 25 and over (Pfizer)",
+        "eligibleBirthMonths": "None",
+        "calendars": [],
+        "vaccineConceptId": "28581000087106",
+        "gisX": 453468,
+        "gisY": 4943251,
+        "gisLocationString": "5991 Spring Garden Rd, Halifax, Halifax Regional Municipality, Halifax County",
+        "clinicName": "Halifax - Lawtons Drugs 132 (Spring Garden Professional) - Pfizer",
+        "mapsLocationString": "5991 Spring Garden Rd, Halifax, NS B3H 4R7"
+    }]
+
+}
