@@ -1,19 +1,3 @@
-<template>
-    <div class="container">
-      <h1>Vaccine Appointments</h1>
-      <div>
-        <b-table 
-          striped
-          hover
-          :items="tableData"
-          :fields="fields"
-          :busy="isBusy"
-          primary-key="id"
-        ></b-table>
-      </div>
-    </div>
-</template>
-
 <script>
 const request = require('request');
 
@@ -29,6 +13,7 @@ export default {
   data() {
       return {
         isBusy: true,
+        loadingDirections: true,
         tableData: [
           {
             appointmentTime: "2",
@@ -49,17 +34,12 @@ export default {
         fields: [
           {
             key: 'shortName',
-            sortable: false,
-            label: 'Name'
+            label: 'Name',
           },
-          {
-            key: 'gisLocationString',
-            sortable: false,
-            label: 'Address'
-          },
+          'address',
           {
             key: 'distance',
-            sortable: false,
+            sortable: true,
           },
           {
             key: 'vaccine',
@@ -73,19 +53,29 @@ export default {
   },
   mounted () {
     const vue = this;
+
+    let before = new Date
     
     request.get({
       'headers': headers,
       'url': AWS_URL + 'locations'
-    }, function (error, response) {
+    }, (error, response) => {
       if (error) throw new Error(error);
       
       let locations = JSON.parse(response.body).locations;
       vue.tableData = locations;
       vue.isBusy = false;
 
+      let middle = new Date
+      console.log(locations);
+      console.log((middle - before)/1000+ ' seconds for request 1');
+      
+      for (let i=0; i<locations.length; i++) {
+        locations[i].gisFields = locations[i].gisLocationString.split(',').length
+      }
+
       let addresses = locations.map(x => ({
-        address: x.gisLocationString,
+        gisLocationString: x.gisLocationString,
         id: x.id
       }));
 
@@ -97,20 +87,51 @@ export default {
         'url': AWS_URL + 'distance',
         'body': body,
         'json': true
-      }, function (error, response) {
+      }, (error, response) => {
         if (error) throw new Error(error);
+        vue.loadingDirections = false;
 
-        console.log(response.body);
-        // let newData = vue.tableData;
-        // for (let i=0; i<locations.length; i++) {
-        //   newData.distance = newData.gisLocationString;
-        // }
+        let distances = response.body;
+        console.log(distances);
+
+        let after = new Date
+        console.log((after - middle)/1000+ ' seconds for request 2');
+
+        for (let i=0; i<locations.length; i++) {
+          let dist = distances.find(x => x.id === locations[i].id);
+          locations[i].distance = dist.distance;
+          locations[i].rawDistance = dist.rawDistance;
+        }
+
+        console.log(locations);
       });  
     })
   }
 }
 </script>
-
+<template>
+    <div class="container">
+      <h1>Vaccine Appointments</h1>
+      <div class="flex" v-if="loadingDirections">
+        <div>Getting Distances</div>
+        <div><b-spinner label="Loading..."></b-spinner></div>
+      </div>
+      <div>
+        <b-table 
+          striped
+          hover
+          :items="tableData"
+          :fields="fields"
+          :busy="isBusy"
+          primary-key="id"
+        >
+          <template #cell(address)="data">
+            <a :href="'https://www.google.com/maps/search/' + data.value.replace(' ','+')" target="_blank" rel="noopener noreferrer">{{ data.value }}</a>
+          </template>
+        </b-table>
+      </div>
+    </div>
+</template>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h3 {
