@@ -14,23 +14,10 @@ export default {
       return {
         isBusy: true,
         loadingDirections: true,
-        tableData: [
-          {
-            appointmentTime: "2",
-            address: "-",
-            distance: "-",
-            name: "-",
-            id: 2
-          },
-          {
-            appointmentTime: "1",
-            address: "-",
-            distance: "-",
-            name: "-",
-            id: 1
-          }
-
-        ],
+        loadingAppts: true,
+        modalTitle: '',
+        selectedLocation: {},
+        tableData: [],
         fields: [
           {
             key: 'shortName',
@@ -42,19 +29,20 @@ export default {
             sortable: true,
           },
           {
+            key: 'utcTime',
+            sortable: true,
+            label: 'Earliest'
+          },
+          {
             key: 'vaccine',
             sortable: true
           },
         ]
       }
   },
-  props: {
-    msg: String
-  },
+  props: {},
   mounted () {
     const vue = this;
-
-    let before = new Date
     
     request.get({
       'headers': headers,
@@ -65,10 +53,6 @@ export default {
       let locations = JSON.parse(response.body).locations;
       vue.tableData = locations;
       vue.isBusy = false;
-
-      let middle = new Date
-      console.log(locations);
-      console.log((middle - before)/1000+ ' seconds for request 1');
       
       for (let i=0; i<locations.length; i++) {
         locations[i].gisFields = locations[i].gisLocationString.split(',').length
@@ -78,10 +62,20 @@ export default {
         gisLocationString: x.gisLocationString,
         id: x.id
       }));
+      this.getDistances(addresses)
+
+      let ids = locations.map(x => x.id);
+      this.getAppts(ids)
+    })
+  },
+  methods: {
+    getDistances(addresses) {
+      const vue = this;
 
       let body = { 
         addresses: addresses 
       }
+
       request.post({
         'headers': headers,
         'url': AWS_URL + 'distance',
@@ -91,61 +85,120 @@ export default {
         if (error) throw new Error(error);
         vue.loadingDirections = false;
 
-        let distances = response.body;
-        console.log(distances);
+        let distances = response.body.distances;
 
-        let after = new Date
-        console.log((after - middle)/1000+ ' seconds for request 2');
-
-        for (let i=0; i<locations.length; i++) {
-          let dist = distances.find(x => x.id === locations[i].id);
-          locations[i].distance = dist.distance;
-          locations[i].rawDistance = dist.rawDistance;
+        for (let i=0; i<vue.tableData.length; i++) {
+          let dist = distances.find(x => x.id === vue.tableData[i].id);
+          vue.tableData[i].distance = dist.distance;
+          vue.tableData[i].rawDistance = dist.rawDistance;
         }
-
-        console.log(locations);
       });  
-    })
+    },
+    getAppts(ids) {
+      const vue = this;
+
+      let body = { 
+        ids: ids 
+      }
+
+      request.post({
+        'headers': headers,
+        'url': AWS_URL + 'appointments',
+        'body': body,
+        'json': true
+      }, (error, response) => {
+        if (error) throw new Error(error);
+        vue.loadingAppts = false;
+
+        let appts = response.body.appts;
+
+        for (let i=0; i<vue.tableData.length; i++) {
+          let appt = appts.find(x => x.id === vue.tableData[i].id);
+          vue.tableData[i].utcTime = appt.earliest.utcTime;
+          vue.tableData[i].apptTime = appt.earliest.apptTime;
+          vue.tableData[i].appts = appt.appts;
+        }
+      }); 
+    },
+    openModal(id) {
+      this.selectedLocation = this.tableData.find(x => x.id === id);
+      if (this.selectedLocation.appts.length > 56) {
+        this.selectedLocation.appts = this.selectedLocation.appts.slice(0,56)
+        this.selectedLocation.appts.push({
+          apptTime: 'more...',
+          utcTime: '2022-01-01T00:00:00.000Z'
+        })
+      }
+    }
   }
 }
 </script>
 <template>
-    <div class="container">
-      <h1>Vaccine Appointments</h1>
-      <div class="flex" v-if="loadingDirections">
-        <div>Getting Distances</div>
-        <div><b-spinner label="Loading..."></b-spinner></div>
-      </div>
-      <div>
-        <b-table 
-          striped
-          hover
-          :items="tableData"
-          :fields="fields"
-          :busy="isBusy"
-          primary-key="id"
-        >
-          <template #cell(address)="data">
-            <a :href="'https://www.google.com/maps/search/' + data.value.replace(' ','+')" target="_blank" rel="noopener noreferrer">{{ data.value }}</a>
-          </template>
-        </b-table>
-      </div>
+<div>
+  <b-modal ok-only id="modal" :title="selectedLocation.shortName">
+    <ul class="d-flex flex-column flex-wrap">
+      <li v-for="item in selectedLocation.appts" :key="item.utcTime">
+        {{ item.apptTime }}
+      </li>
+    </ul>
+  </b-modal>
+  <div class="container">
+    <h1>Vaccine Appointments</h1>
+    <div class="d-flex justify-content-center mb-3" v-if="loadingDirections">
+      <span class="mr-3">Getting Distances</span>
+      <b-spinner label="Loading..."></b-spinner>
     </div>
+    <div class="d-flex justify-content-center mb-3" v-if="loadingAppts">
+      <span class="mr-3">Getting Appointment Times</span>
+      <b-spinner label="Loading..."></b-spinner>
+    </div>
+    <div>
+      <b-table 
+        striped
+        hover
+        :items="tableData"
+        :fields="fields"
+        :busy="isBusy"
+        primary-key="id"
+      >
+        <template #cell(address)="data">
+          <a :href="'https://www.google.com/maps/search/' + data.value.replace(/\s/g,'+')" target="_blank" rel="noopener noreferrer">{{ data.value }}</a>
+        </template>
+        <template #cell(utcTime)="data">
+          <b-button 
+            v-if="loadingAppts"
+          >
+            {{ data.item.apptTime }}
+          </b-button> 
+          <b-button 
+            v-if="!loadingAppts" 
+            v-on:click="openModal(data.item.id)" 
+            v-b-modal.modal
+          >
+            {{ data.item.apptTime }}
+          </b-button> 
+        </template>
+      </b-table>
+    </div>
+  </div>
+</div>
 </template>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
+<style>
 ul {
   list-style-type: none;
   padding: 0;
+  height: calc(100vh - 15rem);
 }
 li {
   display: inline-block;
   margin: 0 10px;
+  width: fit-content;
 }
-a {
-  color: #42b983;
+td {
+    text-align: left;
+}
+tr > td:first-child {
+    width: 35%;
 }
 </style>
