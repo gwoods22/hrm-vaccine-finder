@@ -59,7 +59,7 @@ export default {
       vue.lastupdated = 'Today at ' + time[0]+':'+time[1]+' '+time[2].split(' ')[1].toLowerCase()
       
       let addresses = locations.map(x => ({
-        gisLocationString: x.gisLocationString,
+        mapsLocationString: x.mapsLocationString,
         id: x.id
       }));
       this.getDistances(addresses)
@@ -92,6 +92,7 @@ export default {
           vue.tableData[i].distance = dist.distance;
           vue.tableData[i].rawDistance = dist.rawDistance;
         }
+        vue.$root.$emit('bv::refresh::table', 'data-table')
       });  
     },
     getAppts(ids) {
@@ -171,7 +172,7 @@ export default {
         :fields="fields"
         :busy="isBusy"
         primary-key="id"
-        sort-by="utcTime"
+        sort-by="distance"
       >
         <template #cell(address)="data">
           <a :href="'https://www.google.com/maps/search/' + data.value.replace(/\s/g,'+')" target="_blank" rel="noopener noreferrer">{{ data.value }}</a>
@@ -201,6 +202,9 @@ export default {
 </template>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+button {
+  min-width: 6rem;
+}
 ul {
   list-style-type: none;
   padding: 0;
