@@ -140,7 +140,13 @@ export default {
 </script>
 <template>
 <div>
-  <b-modal ok-only id="modal" :title="selectedLocation.shortName">
+  <b-modal 
+    ok-only 
+    ok-variant="info"
+    id="modal" 
+    variant="info"
+    :title="selectedLocation.shortName"
+  >
     <ul class="d-flex flex-column flex-wrap">
       <li v-for="item in selectedLocation.appts" :key="item.utcTime">
         {{ item.apptTime }}
@@ -181,6 +187,7 @@ export default {
             {{ data.item.apptTime }}
           </b-button> 
           <b-button 
+            variant="info"
             v-if="!loadingAppts" 
             v-on:click="openModal(data.item.id)" 
             v-b-modal.modal
@@ -201,7 +208,7 @@ export default {
 ul {
   list-style-type: none;
   padding: 0;
-  height: calc(100vh - 15rem);
+  max-height: calc(100vh - 15rem);
 }
 li {
   display: inline-block;
