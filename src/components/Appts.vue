@@ -143,7 +143,9 @@ export default {
     </ul>
   </b-modal>
   <div class="container">
-    <h1>Vaccine Appointments</h1>
+    <h1>HRM Vaccine Appointments</h1>
+    <p>Book online with a N.S Health card <a href="https://novascotia.flow.canimmunize.ca/en/9874123-19-7418965">here</a>.</p>
+    <p>Otherwise book by phone at <a href="tel:+1-833-797-7772">1-833-797-7772</a>.</p>
     <div class="d-flex justify-content-center mb-3" v-if="loadingDirections">
       <span class="mr-3">Getting Distances</span>
       <b-spinner label="Loading..."></b-spinner>
@@ -160,6 +162,7 @@ export default {
         :fields="fields"
         :busy="isBusy"
         primary-key="id"
+        sort-by="utcTime"
       >
         <template #cell(address)="data">
           <a :href="'https://www.google.com/maps/search/' + data.value.replace(/\s/g,'+')" target="_blank" rel="noopener noreferrer">{{ data.value }}</a>
