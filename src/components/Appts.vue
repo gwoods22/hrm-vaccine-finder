@@ -122,6 +122,7 @@ export default {
           vue.tableData[i].apptTime = appt.earliest.apptTime;
           vue.tableData[i].appts = appt.appts;
         }
+        vue.$root.$emit('bv::refresh::table', 'data-table')
       }); 
     },
     openModal(id) {
@@ -162,6 +163,8 @@ export default {
       <b-table 
         striped
         hover
+        ref="table"
+        id="data-table"
         :items="tableData"
         :fields="fields"
         :busy="isBusy"
