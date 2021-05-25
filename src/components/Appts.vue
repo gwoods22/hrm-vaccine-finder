@@ -148,7 +148,7 @@ export default {
   </b-modal>
   <div class="container">
     <h1>HRM Vaccine Appointments</h1>
-    <p>Book online with a N.S Health card <a href="https://novascotia.flow.canimmunize.ca/en/9874123-19-7418965">here</a> or book by phone at <a href="tel:+1-833-797-7772">1-833-797-7772</a>.</p>
+    <p>Book online with a N.S Health card <a target="_blank" rel="noopener noreferrer" href="https://novascotia.flow.canimmunize.ca/en/9874123-19-7418965">here</a> or book by phone at <a href="tel:+1-833-797-7772">1-833-797-7772</a>.</p>
     <p>Last updated: {{lastupdated}}</p>
     <div class="d-flex justify-content-center mb-3" v-if="loadingDirections">
       <span class="mr-3">Getting Distances</span>
@@ -188,6 +188,9 @@ export default {
       </b-table>
     </div>
   </div>
+  <footer class="text-center">
+    <p>Made with ❤️ by <a target="_blank" rel="noopener noreferrer" href="http://github.com/gwoods22/">Graeme Woods</a></p>
+  </footer>
 </div>
 </template>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
