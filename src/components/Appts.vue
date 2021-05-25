@@ -14,8 +14,8 @@ export default {
       return {
         isBusy: true,
         loadingDirections: true,
-        loadingAppts: true,
-        modalTitle: '',
+        loadingAppts: true,        
+        lastupdated: '',
         selectedLocation: {},
         tableData: [],
         fields: [
@@ -53,6 +53,10 @@ export default {
       let locations = JSON.parse(response.body).locations;
       vue.tableData = locations;
       vue.isBusy = false;
+
+      let now = new Date
+      let time = now.toLocaleString().split(', ')[1].split(':')      
+      vue.lastupdated = 'Today at ' + time[0]+':'+time[1]+' '+time[2].split(' ')[1].toLowerCase()
       
       for (let i=0; i<locations.length; i++) {
         locations[i].gisFields = locations[i].gisLocationString.split(',').length
@@ -144,8 +148,8 @@ export default {
   </b-modal>
   <div class="container">
     <h1>HRM Vaccine Appointments</h1>
-    <p>Book online with a N.S Health card <a href="https://novascotia.flow.canimmunize.ca/en/9874123-19-7418965">here</a>.</p>
-    <p>Otherwise book by phone at <a href="tel:+1-833-797-7772">1-833-797-7772</a>.</p>
+    <p>Book online with a N.S Health card <a href="https://novascotia.flow.canimmunize.ca/en/9874123-19-7418965">here</a> or book by phone at <a href="tel:+1-833-797-7772">1-833-797-7772</a>.</p>
+    <p>Last updated: {{lastupdated}}</p>
     <div class="d-flex justify-content-center mb-3" v-if="loadingDirections">
       <span class="mr-3">Getting Distances</span>
       <b-spinner label="Loading..."></b-spinner>
