@@ -58,10 +58,6 @@ export default {
       let time = now.toLocaleString().split(', ')[1].split(':')      
       vue.lastupdated = 'Today at ' + time[0]+':'+time[1]+' '+time[2].split(' ')[1].toLowerCase()
       
-      for (let i=0; i<locations.length; i++) {
-        locations[i].gisFields = locations[i].gisLocationString.split(',').length
-      }
-
       let addresses = locations.map(x => ({
         gisLocationString: x.gisLocationString,
         id: x.id
