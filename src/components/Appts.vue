@@ -16,6 +16,7 @@ export default {
         loadingDirections: true,
         loadingAppts: true,        
         lastupdated: '',
+        errorMessage: '',
         sortKey: 'utcTime',
         selectedLocation: {},
         tableData: [],
@@ -43,6 +44,12 @@ export default {
   },
   props: {},
   mounted () {
+    this.$root.$on('bv::modal::hide', bvEvent => {
+      if (bvEvent.componentId === 'error-modal' && bvEvent.trigger === 'ok') {
+        location.reload();
+      }
+    })
+
     const vue = this;
     let allLocations =  (new URLSearchParams(window.location.search)).get('all') === 'true';
     if (allLocations) {
@@ -117,15 +124,32 @@ export default {
         if (error) throw new Error(error);
         vue.loadingAppts = false;
 
-        let appts = response.body.appts;
+        // Error check
+        if ('appts' in response.body) {
+          let appts = response.body.appts;
 
-        for (let i=0; i<vue.tableData.length; i++) {
-          let appt = appts.find(x => x.id === vue.tableData[i].id);
-          vue.tableData[i].utcTime = appt.earliest.utcTime;
-          vue.tableData[i].apptTime = appt.earliest.apptTime;
-          vue.tableData[i].appts = appt.appts;
+          for (let i=0; i<vue.tableData.length; i++) {
+            let appt = appts.find(x => x.id === vue.tableData[i].id);
+            vue.tableData[i].utcTime = appt.earliest.utcTime;
+            vue.tableData[i].apptTime = appt.earliest.apptTime;
+            vue.tableData[i].appts = appt.appts;
+          }
+          vue.$root.$emit('bv::refresh::table', 'data-table')
+        } else if (response.body.errorType === 'REQUEST ERROR') {
+          console.log(response.body.errorMessage)
+          console.log('Appts field:');
+          console.log(response.body.appts);
+          let problem = vue.tableData.find(x => x.id === response.body.id);
+          console.log('Problem location:');
+          console.log(problem);
+          this.errorMessage = 'This was an error getting the appointment times.'
+          this.$bvModal.show('error-modal')
+        } else {
+          console.log('Error during appointments request');
+          console.log(response.body.appts);
+          this.errorMessage = 'This was an error getting the appointment times.'
+          this.$bvModal.show('error-modal')
         }
-        vue.$root.$emit('bv::refresh::table', 'data-table')
       }); 
     },
     openModal(id) {
@@ -146,8 +170,7 @@ export default {
   <b-modal 
     ok-only 
     ok-variant="info"
-    id="modal" 
-    variant="info"
+    id="appt-modal" 
     :title="selectedLocation.shortName"
   >
     <ul class="d-flex flex-column flex-wrap">
@@ -156,6 +179,20 @@ export default {
       </li>
     </ul>
   </b-modal>
+
+  <b-modal 
+    ok-only 
+    ok-title="Refresh"
+    ok-variant="info"
+    id="error-modal" 
+    title="This doesn't normally happen..."
+  >
+    <div>
+      <p>{{errorMessage}}</p>
+      <p>Please refresh the page.</p>
+    </div>
+  </b-modal>
+
   <div class="container">
     <h1>HRM Vaccine Appointments</h1>
     <p>Book online with a N.S Health card <a target="_blank" rel="noopener noreferrer" href="https://novascotia.flow.canimmunize.ca/en/9874123-19-7418965">here</a> or book by phone at <a href="tel:+1-833-797-7772">1-833-797-7772</a>.</p>
@@ -193,7 +230,7 @@ export default {
             variant="info"
             v-if="!loadingAppts" 
             v-on:click="openModal(data.item.id)" 
-            v-b-modal.modal
+            v-b-modal.appt-modal
           >
             {{ data.item.apptTime }}
           </b-button> 
