@@ -1,5 +1,5 @@
 <script>
-const request = require('request');
+const axios = require('axios');
 
 const AWS_URL = 'https://rxaf4n42ye.execute-api.us-east-2.amazonaws.com/prod/'
 
@@ -60,13 +60,10 @@ export default {
       this.hrm = false
     }
     
-    request.get({
-      'headers': headers,
-      'url': AWS_URL + 'locations' + window.location.search
-    }, (error, response) => {
-      if (error) throw new Error(error);
-      
-      let locations = JSON.parse(response.body).locations;
+    axios.get(AWS_URL + 'locations' + window.location.search, {
+      'headers': headers
+    }).then(response => {
+      let locations = response.data.locations;
       vue.isBusy = false;
       if (locations.length === 0) {
         vue.loadingDirections = false;
@@ -89,26 +86,26 @@ export default {
         this.getAppts(ids)
       }
     })
+    .catch(error => {
+      console.log('Locations request error');
+      console.log(error);
+    });
   },
   methods: {
     getDistances(addresses) {
       const vue = this;
 
-      let body = { 
-        addresses: addresses,
-        home: '5691 Inglis St, Halifax'
-      }
+      let data = {
+        'home': '5691 Inglis St, Halifax',
+        'addresses': addresses              
+      };
 
-      request.post({
-        'headers': headers,
-        'url': AWS_URL + 'distance',
-        'body': body,
-        'json': true
-      }, (error, response) => {
-        if (error) throw new Error(error);
+     axios.post(AWS_URL + 'distance', data, {
+        'headers': headers
+      }).then(response => {
         vue.loadingDirections = false;
 
-        let distances = response.body.distances;
+        let distances = response.data.distances;
 
         for (let i=0; i<vue.tableData.length; i++) {
           let dist = distances.find(x => x.id === vue.tableData[i].id);
@@ -116,27 +113,27 @@ export default {
           vue.tableData[i].rawDistance = dist.rawDistance;
         }
         vue.$root.$emit('bv::refresh::table', 'data-table')
-      });  
+      })
+      .catch(error => {
+        console.log('Distances request error');
+        console.log(error);
+      });
     },
     getAppts(ids) {
       const vue = this;
 
-      let body = { 
+      let data = { 
         ids: ids 
       }
 
-      request.post({
-        'headers': headers,
-        'url': AWS_URL + 'appointments',
-        'body': body,
-        'json': true
-      }, (error, response) => {
-        if (error) throw new Error(error);
+      axios.post(AWS_URL + 'appointments', data, {
+        'headers': headers
+      }).then(response => {
         vue.loadingAppts = false;
 
         // Error check
-        if ('appts' in response.body) {
-          let appts = response.body.appts;
+        if ('appts' in response.data) {
+          let appts = response.data.appts;
 
           for (let i=0; i<vue.tableData.length; i++) {
             let appt = appts.find(x => x.id === vue.tableData[i].id);
@@ -145,21 +142,25 @@ export default {
             vue.tableData[i].appts = appt.appts;
           }
           vue.$root.$emit('bv::refresh::table', 'data-table')
-        } else if (response.body.errorType === 'REQUEST ERROR') {
-          console.log(response.body.errorMessage)
+        } else if (response.data.errorType === 'REQUEST ERROR') {
+          console.log(response.data.errorMessage)
           console.log('Appts field:');
-          console.log(response.body.appts);
-          let problem = vue.tableData.find(x => x.id === response.body.id);
+          console.log(response.data.appts);
+          let problem = vue.tableData.find(x => x.id === response.data.id);
           console.log('Problem location:');
           console.log(problem);
           this.errorMessage = 'This was an error getting the appointment times.'
           this.$bvModal.show('error-modal')
         } else {
           console.log('Error during appointments request');
-          console.log(response.body.appts);
+          console.log(response.data.appts);
           this.errorMessage = 'This was an error getting the appointment times.'
           this.$bvModal.show('error-modal')
         }
+      })
+      .catch(error => {
+        console.log('Locations request error');
+        console.log(error);
       }); 
     },
     openModal(id) {
@@ -308,7 +309,7 @@ ul {
 .modal ul {
   max-height: calc(100vh - 15rem);
 }
-.tr > td:nth-child(4) button {
+tr > td:nth-child(5) button {
   min-width: 8rem;
 }
 li {
