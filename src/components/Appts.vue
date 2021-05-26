@@ -15,7 +15,8 @@ export default {
         hrm: true,  
         isBusy: true,
         loadingDirections: true,
-        loadingAppts: true,        
+        loadingAppts: true,
+        noResults: false,
         lastupdated: '',
         errorMessage: '',
         sortKey: 'utcTime',
@@ -65,21 +66,27 @@ export default {
       if (error) throw new Error(error);
       
       let locations = JSON.parse(response.body).locations;
-      vue.tableData = locations;
       vue.isBusy = false;
+      if (locations.length === 0) {
+        vue.loadingDirections = false;
+        vue.loadingAppts = false;
+        vue.noResults = true;
+      } else {
+        vue.tableData = locations;
 
-      let now = new Date
-      let time = now.toLocaleString().split(', ')[1].split(':')      
-      vue.lastupdated = 'Today at ' + time[0]+':'+time[1]+' '+time[2].split(' ')[1].toLowerCase()
-      
-      let addresses = locations.map(x => ({
-        mapsLocationString: x.mapsLocationString,
-        id: x.id
-      }));
-      this.getDistances(addresses)
+        let now = new Date
+        let time = now.toLocaleString().split(', ')[1].split(':')      
+        vue.lastupdated = 'Today at ' + time[0]+':'+time[1]+' '+time[2].split(' ')[1].toLowerCase()
+        
+        let addresses = locations.map(x => ({
+          mapsLocationString: x.mapsLocationString,
+          id: x.id
+        }));
+        this.getDistances(addresses)
 
-      let ids = locations.map(x => x.id);
-      this.getAppts(ids)
+        let ids = locations.map(x => x.id);
+        this.getAppts(ids)
+      }
     })
   },
   methods: {
@@ -170,7 +177,7 @@ export default {
 <template>
 <div>
   <b-modal 
-    ok-only 
+    ok-only
     id="appt-modal" 
     :title="selectedLocation.shortName"
   >
@@ -216,7 +223,7 @@ export default {
   <div class="container">
     <h1>HRM Vaccine Appointments</h1>
     <p>Book online with a N.S Health card <a target="_blank" rel="noopener noreferrer" href="https://novascotia.flow.canimmunize.ca/en/9874123-19-7418965">here</a> or book by phone at <a href="tel:+1-833-797-7772">1-833-797-7772</a>.</p>
-    <p>Last updated: {{lastupdated}}</p>
+    <p v-if="!loadingDirections && !noResults">Last updated: {{lastupdated}}</p>
     <div class="d-flex justify-content-center mb-3" v-if="loadingDirections">
       <span class="mr-3">Getting Distances</span>
       <b-spinner label="Loading..."></b-spinner>
@@ -257,6 +264,7 @@ export default {
           </b-button> 
         </template>
       </b-table>
+      <h4 v-if="noResults">No vaccine locations found</h4>
     </div>
   </div>
   <footer class="text-center">
