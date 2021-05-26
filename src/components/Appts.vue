@@ -33,7 +33,7 @@ export default {
           {
             key: 'utcTime',
             sortable: true,
-            label: 'Earliest'
+            label: 'Earliest Appt.'
           },
           {
             key: 'vaccine',
@@ -246,8 +246,9 @@ export default {
           </b-button> 
           <b-button 
             variant="info"
+            size="sm"
             v-if="!loadingAppts" 
-            v-on:click="openModal(data.item.id)" 
+            @click="openModal(data.item.id)" 
             v-b-modal.appt-modal
           >
             {{ data.item.apptTime }}
@@ -263,13 +264,15 @@ export default {
 </template>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-button {
-  min-width: 6rem;
-}
 ul {
   list-style-type: none;
   padding: 0;
+}
+.modal ul {
   max-height: calc(100vh - 15rem);
+}
+.table button {
+  min-width: 8rem;
 }
 li {
   display: inline-block;
