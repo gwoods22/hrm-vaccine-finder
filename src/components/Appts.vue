@@ -12,6 +12,7 @@ export default {
   name: 'HelloWorld',
   data() {
       return {
+        hrm: true,  
         isBusy: true,
         loadingDirections: true,
         loadingAppts: true,        
@@ -54,6 +55,7 @@ export default {
     let allLocations =  (new URLSearchParams(window.location.search)).get('all') === 'true';
     if (allLocations) {
       this.sortKey = 'distance'
+      this.hrm = false
     }
     
     request.get({
@@ -258,6 +260,8 @@ export default {
     </div>
   </div>
   <footer class="text-center">
+    <p v-if="hrm"><a href="/?all=true">See all appointments.</a></p>
+    <p v-if="!hrm"><a href="/">Just see HRM appointments.</a></p>
     <p>Made with ❤️ by <a target="_blank" rel="noopener noreferrer" href="http://github.com/gwoods22/">Graeme Woods</a></p>
   </footer>
 </div>
