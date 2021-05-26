@@ -16,6 +16,7 @@ export default {
         loadingDirections: true,
         loadingAppts: true,        
         lastupdated: '',
+        sortKey: 'utcTime',
         selectedLocation: {},
         tableData: [],
         fields: [
@@ -43,10 +44,14 @@ export default {
   props: {},
   mounted () {
     const vue = this;
+    let allLocations =  (new URLSearchParams(window.location.search)).get('all') === 'true';
+    if (allLocations) {
+      this.sortKey = 'distance'
+    }
     
     request.get({
       'headers': headers,
-      'url': AWS_URL + 'locations'
+      'url': AWS_URL + 'locations' + window.location.search
     }, (error, response) => {
       if (error) throw new Error(error);
       
@@ -172,7 +177,7 @@ export default {
         :fields="fields"
         :busy="isBusy"
         primary-key="id"
-        sort-by="distance"
+        :sort-by="sortKey"
       >
         <template #cell(address)="data">
           <a :href="'https://www.google.com/maps/search/' + data.value.replace(/\s/g,'+')" target="_blank" rel="noopener noreferrer">{{ data.value }}</a>
@@ -217,8 +222,5 @@ li {
 }
 td {
     text-align: left;
-}
-tr > td:first-child {
-    width: 35%;
 }
 </style>
