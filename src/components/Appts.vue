@@ -169,7 +169,6 @@ export default {
 <div>
   <b-modal 
     ok-only 
-    ok-variant="info"
     id="appt-modal" 
     :title="selectedLocation.shortName"
   >
@@ -178,6 +177,25 @@ export default {
         {{ item.apptTime }}
       </li>
     </ul>
+    <template #modal-footer>
+      <div class="w-100 d-flex justify-content-between align-items-center">
+        <a 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          href="https://novascotia.flow.canimmunize.ca/en/9874123-19-7418965" 
+          class="float-left"
+        >
+          Book your appointment now!
+        </a>
+        <b-button
+          variant="info"
+          class="float-right"
+          @click="$bvModal.hide('appt-modal')"
+        >
+          OK
+        </b-button>
+      </div>
+    </template>
   </b-modal>
 
   <b-modal 
