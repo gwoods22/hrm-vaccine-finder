@@ -28,6 +28,7 @@ export default {
             label: 'Name',
           },
           'address',
+          'copy',
           {
             key: 'distance',
             sortable: true,
@@ -266,8 +267,10 @@ export default {
           >
             {{ data.value }}
           </a>
-          <b-button @click="copyAddress(data.value)">
-            copy
+        </template>
+        <template #cell(copy)="data">
+          <b-button variant="info" size="sm" @click="copyAddress(data.item.address)">
+            <font-awesome-icon icon="copy" />
           </b-button>
         </template>
         <template #cell(utcTime)="data">
@@ -305,7 +308,7 @@ ul {
 .modal ul {
   max-height: calc(100vh - 15rem);
 }
-.table button {
+.tr > td:nth-child(4) button {
   min-width: 8rem;
 }
 li {
