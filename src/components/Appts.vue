@@ -170,6 +170,20 @@ export default {
           utcTime: '2022-01-01T00:00:00.000Z'
         })
       }
+    },
+    copyAddress(address) {
+      let shortAddress;
+      if (address.split(', ').length === 1) {
+        shortAddress = address.split(/\s\w+\sNS/)[0]
+      } else {
+        shortAddress = address.split(', ')[0]
+      }
+
+      navigator.clipboard.writeText(shortAddress).then(() => {
+        console.log('Async: Copying to clipboard was successful!');
+      }, function(err) {
+        console.error('Async: Could not copy text: ', err);
+      });
     }
   }
 }
@@ -245,13 +259,22 @@ export default {
         :sort-by="sortKey"
       >
         <template #cell(address)="data">
-          <a :href="'https://www.google.com/maps/search/' + data.value.replace(/\s/g,'+')" target="_blank" rel="noopener noreferrer">{{ data.value }}</a>
+          <a 
+            :href="'https://www.google.com/maps/search/' + data.value.replace(/\s/g,'+')"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {{ data.value }}
+          </a>
+          <b-button @click="copyAddress(data.value)">
+            copy
+          </b-button>
         </template>
         <template #cell(utcTime)="data">
           <b-button 
             v-if="loadingAppts"
           >
-            {{ data.item.apptTime }}
+            Loading...
           </b-button> 
           <b-button 
             variant="info"
@@ -274,7 +297,6 @@ export default {
   </footer>
 </div>
 </template>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
 ul {
   list-style-type: none;
