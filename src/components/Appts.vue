@@ -78,7 +78,8 @@ export default {
       const vue = this;
 
       let body = { 
-        addresses: addresses 
+        addresses: addresses,
+        home: '5691 Inglis St, Halifax'
       }
 
       request.post({
