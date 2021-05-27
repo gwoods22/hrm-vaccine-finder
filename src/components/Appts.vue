@@ -260,10 +260,10 @@ export default {
       <p>
         This app shows the latest vaccine appointments in the HRM region. Click the
         Earliest Appt. buttons to see all appointments at that location, and click
-        the address field to open it in Google Maps.
+        the address field to open the location in Google Maps.
       </p>
       <p>
-        The copy field makes it easy to quickly copy the appointment address to paste
+        The copy button makes it easy to quickly copy the appointment address to paste
         it in to the NS reservation site. Then when you search for appointments the
         available one should be right at the top of the results!
       </p>
@@ -285,7 +285,6 @@ export default {
     </div>
     <div>
       <b-table 
-        responsive
         striped
         hover
         ref="table"
