@@ -68,44 +68,44 @@ export default {
   },
   methods: {
     pullData() {
-    const vue = this;
-    let allLocations =  (new URLSearchParams(window.location.search)).get('all') === 'true';
-    if (allLocations) {
-      this.sortKey = 'distance'
-      this.hrm = false
-    }
-    
-      axios.get(allLocations ? AWS_URL + 'locations' + window.location.search : AWS_URL + 'locations', {
-      'headers': headers
-    }).then(response => {
-      let locations = response.data.locations;
-      vue.isBusy = false;
-      if (locations.length === 0) {
-        vue.loadingDirections = false;
-        vue.loadingAppts = false;
-        vue.noResults = true;
-      } else {
-        vue.tableData = locations;
-
-        let now = new Date
-        let time = now.toLocaleString().split(', ')[1].split(':')      
-        vue.lastupdated = 'Today at ' + time[0]+':'+time[1]+' '+time[2].split(' ')[1].toLowerCase()
-        
-        let addresses = locations.map(x => ({
-          mapsLocationString: x.mapsLocationString,
-          id: x.id
-        }));
-        this.getDistances(addresses)
-
-        let ids = locations.map(x => x.id);
-        this.getAppts(ids)
+      const vue = this;
+      let allLocations =  (new URLSearchParams(window.location.search)).get('all') === 'true' && false;
+      if (allLocations) {
+        this.sortKey = 'distance'
+        this.hrm = false
       }
-    })
-    .catch(error => {
-      console.log('Locations request error');
-      console.log(error);
-    });
-  },
+
+      axios.get(allLocations ? AWS_URL + 'locations' + window.location.search : AWS_URL + 'locations', {
+        'headers': headers
+      }).then(response => {
+        let locations = response.data.locations;
+        vue.isBusy = false;
+        if (locations.length === 0) {
+          vue.loadingDirections = false;
+          vue.loadingAppts = false;
+          vue.noResults = true;
+        } else {
+          vue.tableData = locations;
+
+          let now = new Date
+          let time = now.toLocaleString().split(', ')[1].split(':')      
+          vue.lastupdated = 'Today at ' + time[0]+':'+time[1]+' '+time[2].split(' ')[1].toLowerCase()
+          
+          let addresses = locations.map(x => ({
+            mapsLocationString: x.mapsLocationString,
+            id: x.id
+          }));
+          this.getDistances(addresses)
+
+          let ids = locations.map(x => x.id);
+          this.getAppts(ids)
+        }
+      })
+      .catch(error => {
+        console.log('Locations request error');
+        console.log(error);
+      });
+    },
     getDistances(addresses) {
       const vue = this;
 
@@ -331,8 +331,8 @@ export default {
     </div>
   </div>
   <footer class="text-center">
-    <p v-if="hrm"><a href="/?all=true">See all appointments.</a></p>
-    <p v-if="!hrm"><a href="/">Just see HRM appointments.</a></p>
+    <p v-if="hrm && false"><a href="/?all=true">See all appointments.</a></p>
+    <p v-if="!hrm && false"><a href="/">Just see HRM appointments.</a></p>
     <p>Made with ❤️ by <a target="_blank" rel="noopener noreferrer" href="http://github.com/gwoods22/">Graeme Woods</a></p>
   </footer>
 </div>
