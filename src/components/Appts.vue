@@ -285,6 +285,7 @@ export default {
     </div>
     <div>
       <b-table 
+        responsive
         striped
         hover
         ref="table"
