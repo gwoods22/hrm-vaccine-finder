@@ -48,17 +48,26 @@ export default {
   },
   props: {},
   mounted () {    
+    let returningUser = true
     if (Cookies.get('returningUser') !== 'true') {
       this.$bvModal.show('help-modal')
       Cookies.set('returningUser', true, { expires: 365 });
+      returningUser = false
+    } else {
+      this.pullData()
     }
 
     this.$root.$on('bv::modal::hide', bvEvent => {
       if (bvEvent.componentId === 'error-modal' && bvEvent.trigger === 'ok') {
         location.reload();
       }
+      if (bvEvent.componentId === 'help-modal' && !returningUser) {
+        this.pullData()
+      }
     })
-
+  },
+  methods: {
+    pullData() {
     const vue = this;
     let allLocations =  (new URLSearchParams(window.location.search)).get('all') === 'true';
     if (allLocations) {
@@ -66,7 +75,7 @@ export default {
       this.hrm = false
     }
     
-    axios.get(AWS_URL + 'locations' + window.location.search, {
+      axios.get(allLocations ? AWS_URL + 'locations' + window.location.search : AWS_URL + 'locations', {
       'headers': headers
     }).then(response => {
       let locations = response.data.locations;
@@ -97,7 +106,6 @@ export default {
       console.log(error);
     });
   },
-  methods: {
     getDistances(addresses) {
       const vue = this;
 
