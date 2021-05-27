@@ -338,6 +338,12 @@ export default {
 </div>
 </template>
 <style>
+html, body {
+  overflow-x: hidden;
+}
+body {
+  position: relative
+}
 ul {
   list-style-type: none;
   padding: 0;
