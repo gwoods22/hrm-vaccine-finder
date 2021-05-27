@@ -69,15 +69,18 @@ export default {
   methods: {
     pullData() {
       const vue = this;
+
       let allLocations =  (new URLSearchParams(window.location.search)).get('all') === 'true' && false;
       if (allLocations) {
         this.sortKey = 'distance'
         this.hrm = false
       }
-
-      axios.get(allLocations ? AWS_URL + 'locations' + window.location.search : AWS_URL + 'locations', {
+      
+      let url = allLocations ? AWS_URL + 'locations' + window.location.search : AWS_URL + 'locations'
+      axios.get(url, {
         'headers': headers
       }).then(response => {
+        console.log(response.data);
         let locations = response.data.locations;
         vue.isBusy = false;
         if (locations.length === 0) {
