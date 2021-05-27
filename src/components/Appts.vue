@@ -1,5 +1,6 @@
 <script>
 const axios = require('axios');
+const Cookies = require('js-cookie')
 
 const AWS_URL = 'https://rxaf4n42ye.execute-api.us-east-2.amazonaws.com/prod/'
 
@@ -46,7 +47,12 @@ export default {
       }
   },
   props: {},
-  mounted () {
+  mounted () {    
+    if (Cookies.get('returningUser') !== 'true') {
+      this.$bvModal.show('help-modal')
+      Cookies.set('returningUser', true, { expires: 365 });
+    }
+
     this.$root.$on('bv::modal::hide', bvEvent => {
       if (bvEvent.componentId === 'error-modal' && bvEvent.trigger === 'ok') {
         location.reload();
@@ -236,6 +242,27 @@ export default {
     </div>
   </b-modal>
 
+  <b-modal 
+    ok-only
+    ok-variant="info"
+    id="help-modal" 
+    title="Welcome fellow vaccine hunter!"
+  >
+    <div>
+      <p>
+        This app shows the latest vaccine appointments in the HRM region. Click the
+        Earliest Appt. buttons to see all appointments at that location, and click
+        the address field to open it in Google Maps.
+      </p>
+      <p>
+        The copy field makes it easy to quickly copy the appointment address to paste
+        it in to the NS reservation site. Then when you search for appointments the
+        available one should be right at the top of the results!
+      </p>
+      <p>Hope this helps you find an appointment!</p>
+    </div>
+  </b-modal>
+
   <div class="container">
     <h1>HRM Vaccine Appointments</h1>
     <p>Book online with a N.S Health card <a target="_blank" rel="noopener noreferrer" href="https://novascotia.flow.canimmunize.ca/en/9874123-19-7418965">here</a> or book by phone at <a href="tel:+1-833-797-7772">1-833-797-7772</a>.</p>
@@ -250,6 +277,7 @@ export default {
     </div>
     <div>
       <b-table 
+        responsive
         striped
         hover
         ref="table"
