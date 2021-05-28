@@ -70,13 +70,13 @@ export default {
     pullData() {
       const vue = this;
 
-      let allLocations =  (new URLSearchParams(window.location.search)).get('all') === 'true' && false;
+      let allLocations =  (new URLSearchParams(window.location.search)).get('all') === 'true';
       if (allLocations) {
         this.sortKey = 'distance'
         this.hrm = false
       }
       
-      let url = allLocations ? AWS_URL + 'locations' + window.location.search : AWS_URL + 'locations'
+      let url = AWS_URL + 'locations' + window.location.search;
       axios.get(url, {
         'headers': headers
       }).then(response => {
@@ -334,8 +334,8 @@ export default {
     </div>
   </div>
   <footer class="text-center">
-    <p v-if="hrm && false"><a href="/?all=true">See all appointments.</a></p>
-    <p v-if="!hrm && false"><a href="/">Just see HRM appointments.</a></p>
+    <p v-if="hrm"><a href="/?all=true">See all appointments.</a></p>
+    <p v-if="!hrm"><a href="/">Just see HRM appointments.</a></p>
     <p>Made with ❤️ by <a target="_blank" rel="noopener noreferrer" href="http://github.com/gwoods22/">Graeme Woods</a></p>
   </footer>
 </div>
