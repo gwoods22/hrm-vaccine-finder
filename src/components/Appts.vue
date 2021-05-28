@@ -334,7 +334,7 @@ export default {
     </div>
   </div>
   <footer class="text-center">
-    <p v-if="hrm"><a href="/?all=true">See all appointments.</a></p>
+    <p v-if="hrm && false"><a href="/?all=true">See all NS appointments.</a></p>
     <p v-if="!hrm"><a href="/">Just see HRM appointments.</a></p>
     <p>Made with ❤️ by <a target="_blank" rel="noopener noreferrer" href="http://github.com/gwoods22/">Graeme Woods</a></p>
   </footer>
