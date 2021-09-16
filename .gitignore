@@ -2,6 +2,8 @@
 node_modules
 /dist
 
+# Initial python requests
+old-python/
 
 # local env files
 .env.local
