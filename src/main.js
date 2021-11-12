@@ -8,8 +8,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 import { faCopy } from '@fortawesome/free-solid-svg-icons'
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
 import router from './router'
 library.add(faCopy)
+library.add(faExclamationTriangle)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
