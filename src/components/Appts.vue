@@ -308,9 +308,6 @@ export default {
           >
             {{ data.value }}
           </a>
-          <span class="location-id">
-            {{ data.item.id }}
-          </span>
         </template>
         <!-- Copy header tooltip -->
         <template #head(copy)="data">
