@@ -448,4 +448,16 @@ export default {
       }
     }
   }
+  @media (max-width: 480px) {
+    .alert-warning {
+      display: block;
+      text-align: justify;
+      & p {
+        display: inline;
+      }
+      & svg {
+        margin-right: 10px;
+      }
+    }
+  }
 </style>
