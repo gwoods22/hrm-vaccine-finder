@@ -24,4 +24,6 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
+# Personal files
 TODO.md
+reference-files/
