@@ -408,6 +408,9 @@ export default {
       margin-bottom: 0;
     }
   }
+  .table-responsive {
+    overflow-x: visible;
+  }
   .copy-tootlip {
     position: relative;
     cursor: pointer;
