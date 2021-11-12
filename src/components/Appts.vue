@@ -299,6 +299,7 @@ export default {
         primary-key="id"
         :sort-by="sortKey"
       >
+        <!-- Address column -->
         <template #cell(address)="data">
           <a 
             :href="'https://www.google.com/maps/search/' + data.value.replace(/\s/g,'+')"
@@ -307,12 +308,17 @@ export default {
           >
             {{ data.value }}
           </a>
+          <span class="location-id">
+            {{ data.id }}
+          </span>
         </template>
+        <!-- Copy address button -->
         <template #cell(copy)="data">
           <b-button variant="info" size="sm" @click="copyAddress(data.item.address)">
             <font-awesome-icon icon="copy" />
           </b-button>
         </template>
+        <!-- Appts column -->
         <template #cell(utcTime)="data">
           <b-button 
             v-if="loadingAppts"
