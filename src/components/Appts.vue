@@ -318,6 +318,14 @@ export default {
             {{ data.value }}
           </a>
         </template>
+        <!-- Distance header tooltip -->
+        <template #head(distance)="data">
+          <div class="copy-tootlip">{{ data.label }}
+            <span>
+              Driving distance calculated from South Halifax.
+            </span>
+          </div>
+        </template>
         <!-- Copy header tooltip -->
         <template #head(copy)="data">
           <div class="copy-tootlip">{{ data.label }}
@@ -363,30 +371,30 @@ export default {
 </div>
 </template>
 <style lang="scss">
-html, body {
-  overflow-x: hidden;
-}
-body {
-  position: relative
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-.modal ul {
-  max-height: calc(100vh - 15rem);
-}
-tr > td:nth-child(5) button {
-  min-width: 8rem;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-  width: fit-content;
-}
-td {
+  html, body {
+    overflow-x: hidden;
+  }
+  body {
+    position: relative
+  }
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  .modal ul {
+    max-height: calc(100vh - 15rem);
+  }
+  tr > td:nth-child(5) button {
+    min-width: 8rem;
+  }
+  li {
+    display: inline-block;
+    margin: 0 10px;
+    width: fit-content;
+  }
+  td {
     text-align: left;
-}
+  }
   footer {
     margin-bottom: 30px;
   }
@@ -400,48 +408,44 @@ td {
       margin-bottom: 0;
     }
   }
-.copy-tootlip {
-  position: relative;
-  cursor: pointer;
-  position: relative;
-    &::after {
-  content: '';
-  background-color: #000;
-  width: 100%;
-  height: 1px;
-  position: absolute;
-  bottom: 1px;
-  right: 0;
-}
+  .copy-tootlip {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+
+    border-bottom: 1px dotted #888;
+    text-decoration: none;
+    margin-bottom: -1px;
+
     &:hover span {
       opacity: 1;
       z-index: 999;
     }
     & span {
-  opacity: 0;
-  transition: 0.5s;
-  position: absolute;
-  left: -115px;
-  padding: 10px;
-  top: 45px;
-  width: 270px;
-  z-index: -1;
-  border-radius: 10px;
-  color: #fff;
+      opacity: 0;
+      transition: 0.5s;
+      position: absolute;
+      left: -115px;
+      padding: 10px;
+      top: 45px;
+      width: 270px;
+      z-index: -1;
+      border-radius: 10px;
+      color: #fff;
       background-color: #149baf;
 
-      & span::after{
-  content: '';
-  position: absolute;
-  top: -15px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0; 
-  height: 0; 
-  border-left: 15px solid transparent;
-  border-right: 15px solid transparent;
-  border-bottom: 15px solid #149baf;
-}
+      &::after{
+        content: '';
+        position: absolute;
+        top: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0; 
+        height: 0; 
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        border-bottom: 15px solid #149baf;
+      }
     }
-}
+  }
 </style>
