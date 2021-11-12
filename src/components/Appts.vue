@@ -277,6 +277,15 @@ export default {
   <div class="container">
     <h1>HRM Vaccine Appointments</h1>
     <p>Book online with a N.S Health card <a target="_blank" rel="noopener noreferrer" href="https://novascotia.flow.canimmunize.ca/en/9874123-19-7418965">here</a> or book by phone at <a href="tel:+1-833-797-7772">1-833-797-7772</a>.</p>
+    <b-alert show variant="warning">
+      <font-awesome-icon icon="exclamation-triangle" />
+      <p>
+        <span class="font-weight-bold">This data is now out of date.</span>
+        As Halifax's vaccine program winds down there are less appointments available.
+        To keep this site working as a proof of concept, I've saved past appointment
+        data to a database to show how the system works.
+      </p>
+    </b-alert>
     <p v-if="!loadingDirections && !noResults">Last updated: {{lastupdated}}</p>
     <div class="d-flex justify-content-center mb-3" v-if="loadingDirections">
       <span class="mr-3">Getting Distances</span>
@@ -380,6 +389,16 @@ td {
 }
   footer {
     margin-bottom: 30px;
+  }
+  .alert-warning {
+    display: flex;
+    align-items: center;
+    svg {
+      margin-right: 20px;
+    }
+    p {
+      margin-bottom: 0;
+    }
   }
 .copy-tootlip {
   position: relative;
