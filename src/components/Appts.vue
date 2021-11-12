@@ -349,10 +349,11 @@ export default {
     <p v-if="hrm && false"><a href="/?all=true">See all NS appointments.</a></p>
     <p v-if="!hrm"><a href="/">Just see HRM appointments.</a></p>
     <p>Made by <a target="_blank" rel="noopener noreferrer" href="http://github.com/gwoods22/">Graeme Woods</a></p>
+    <router-link to="/privacy">Privacy Policy</router-link>
   </footer>
 </div>
 </template>
-<style>
+<style lang="scss">
 html, body {
   overflow-x: hidden;
 }
@@ -377,12 +378,14 @@ li {
 td {
     text-align: left;
 }
+  footer {
+    margin-bottom: 30px;
+  }
 .copy-tootlip {
   position: relative;
   cursor: pointer;
   position: relative;
-}
-.copy-tootlip::after {
+    &::after {
   content: '';
   background-color: #000;
   width: 100%;
@@ -391,7 +394,11 @@ td {
   bottom: 1px;
   right: 0;
 }
-.copy-tootlip span {
+    &:hover span {
+      opacity: 1;
+      z-index: 999;
+    }
+    & span {
   opacity: 0;
   transition: 0.5s;
   position: absolute;
@@ -402,9 +409,9 @@ td {
   z-index: -1;
   border-radius: 10px;
   color: #fff;
-  background-color: #149baf
-}
-.copy-tootlip span::after{
+      background-color: #149baf;
+
+      & span::after{
   content: '';
   position: absolute;
   top: -15px;
@@ -416,8 +423,6 @@ td {
   border-right: 15px solid transparent;
   border-bottom: 15px solid #149baf;
 }
-.copy-tootlip:hover span {
-  opacity: 1;
-  z-index: 999;
+    }
 }
 </style>
