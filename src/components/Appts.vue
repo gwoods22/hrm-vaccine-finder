@@ -309,8 +309,17 @@ export default {
             {{ data.value }}
           </a>
           <span class="location-id">
-            {{ data.id }}
+            {{ data.item.id }}
           </span>
+        </template>
+        <!-- Copy header tooltip -->
+        <template #head(copy)="data">
+          <div class="copy-tootlip">{{ data.label }}
+            <span>
+              The copy button allows you to quickly copy the address for easy pasting
+              in to the province's vaccine booking website.
+            </span>
+          </div>
         </template>
         <!-- Copy address button -->
         <template #cell(copy)="data">
@@ -370,5 +379,48 @@ li {
 }
 td {
     text-align: left;
+}
+.copy-tootlip {
+  position: relative;
+  cursor: pointer;
+  position: relative;
+}
+.copy-tootlip::after {
+  content: '';
+  background-color: #000;
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  bottom: 1px;
+  right: 0;
+}
+.copy-tootlip span {
+  opacity: 0;
+  transition: 0.5s;
+  position: absolute;
+  left: -115px;
+  padding: 10px;
+  top: 45px;
+  width: 270px;
+  z-index: -1;
+  border-radius: 10px;
+  color: #fff;
+  background-color: #149baf
+}
+.copy-tootlip span::after{
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0; 
+  height: 0; 
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 15px solid #149baf;
+}
+.copy-tootlip:hover span {
+  opacity: 1;
+  z-index: 999;
 }
 </style>
