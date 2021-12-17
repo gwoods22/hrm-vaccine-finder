@@ -10,7 +10,7 @@ const headers =  {
 };
 
 export default {
-  name: 'HelloWorld',
+  name: 'Appts',
   data() {
       return {
         hrm: true,  
@@ -277,7 +277,7 @@ export default {
   <div class="container">
     <h1>HRM Vaccine Appointments</h1>
     <p>Book online with a N.S Health card <a target="_blank" rel="noopener noreferrer" href="https://novascotia.flow.canimmunize.ca/en/9874123-19-7418965">here</a> or book by phone at <a href="tel:+1-833-797-7772">1-833-797-7772</a>.</p>
-    <b-alert show variant="warning">
+    <b-alert show variant="warning" class="d-none">
       <font-awesome-icon icon="exclamation-triangle" />
       <p>
         <span class="font-weight-bold">This data is now out of date.</span>
