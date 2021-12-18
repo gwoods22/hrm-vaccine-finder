@@ -6,7 +6,8 @@ const AWS_URL = 'https://rxaf4n42ye.execute-api.us-east-2.amazonaws.com/prod/'
 
 const headers =  {
   'x-api-key': 'ca7nZ35PtD5lxNQQEW5rE5aP8416btyhce6RJPRa',
-  'Content-Type': 'application/json'
+  'Content-Type': 'application/json',
+  'Test-Mode': false
 };
 
 export default {
