@@ -44,6 +44,7 @@ export default {
             key: 'vaccine',
             sortable: true
           },
+          'age',
         ]
       }
   },
@@ -308,6 +309,13 @@ export default {
         :busy="isBusy"
         primary-key="id"
         :sort-by="sortKey"
+      >
+        <!-- Age column -->
+        <template #cell(age)="data">
+          <p>
+            {{ data.item.maxAge === null ? `${data.item.minAge}+` : `${data.item.minAge} - ${data.item.maxAge}` }}
+          </p>
+        </template>
       >
         <!-- Address column -->
         <template #cell(address)="data">
