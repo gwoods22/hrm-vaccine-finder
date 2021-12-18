@@ -435,7 +435,7 @@ export default {
     }
     & span {
       opacity: 0;
-      transition: 0.5s;
+      transition: 0.25s;
       position: absolute;
       left: -115px;
       padding: 10px;
