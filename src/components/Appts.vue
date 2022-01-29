@@ -4,16 +4,19 @@ const Cookies = require('js-cookie')
 
 const AWS_URL = 'https://rxaf4n42ye.execute-api.us-east-2.amazonaws.com/prod/'
 
+const TEST_MODE = true
+
 const headers =  {
   'x-api-key': 'ca7nZ35PtD5lxNQQEW5rE5aP8416btyhce6RJPRa',
   'Content-Type': 'application/json',
-  'Test-Mode': false
+  'Test-Mode': TEST_MODE
 };
 
 export default {
   name: 'Appts',
   data() {
       return {
+        testMode: TEST_MODE,
         hrm: true,  
         isBusy: true,
         loadingDirections: true,
@@ -280,7 +283,7 @@ export default {
   <div class="container">
     <h1>HRM Vaccine Appointments</h1>
     <p>Book online with a N.S Health card <a target="_blank" rel="noopener noreferrer" href="https://novascotia.flow.canimmunize.ca/en/9874123-19-7418965">here</a> or book by phone at <a href="tel:+1-833-797-7772">1-833-797-7772</a>.</p>
-    <b-alert show variant="warning" class="d-none">
+    <b-alert show variant="warning" v-bind:class="{ 'd-none': !testMode }">
       <font-awesome-icon icon="exclamation-triangle" />
       <p>
         <span class="font-weight-bold">This data is now out of date.</span>
