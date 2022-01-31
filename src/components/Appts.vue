@@ -118,8 +118,7 @@ export default {
       const vue = this;
 
       let data = {
-        // 'home': '5691 Inglis St, Halifax',
-        'home': '9830 Main St, Canning',
+        'home': '5691 Inglis St, Halifax',
         'addresses': addresses              
       };
 
@@ -335,7 +334,7 @@ export default {
         <template #head(distance)="data">
           <div class="copy-tootlip">{{ data.label }}
             <span>
-              Driving distance calculated from Canning, NS.
+              Driving distance calculated from downtown Halifax, NS.
             </span>
           </div>
         </template>
