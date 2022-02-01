@@ -286,8 +286,8 @@ export default {
       <font-awesome-icon icon="exclamation-triangle" />
       <p>
         <span class="font-weight-bold">This data is now out of date.</span>
-        As Halifax's vaccine program winds down there are less appointments available.
-        To keep this site working as a proof of concept, I've saved past appointment
+        As the Halifax region's initial vaccine program winds down, there are less appointments available.
+        To keep this app working as a proof of concept, I've saved previous publicly available appointment
         data to a database to show how the system works.
       </p>
     </b-alert>
