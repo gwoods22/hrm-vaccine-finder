@@ -382,7 +382,8 @@ export default {
     overflow-x: hidden;
   }
   body {
-    position: relative
+    position: relative;
+    padding-right: 0 !important;
   }
   ul {
     list-style-type: none;
