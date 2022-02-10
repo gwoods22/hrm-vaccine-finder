@@ -266,14 +266,9 @@ export default {
   >
     <div>
       <p>
-        This app shows the latest vaccine appointments in the HRM region. Click the
-        Earliest Appt. buttons to see all appointments at that location, and click
-        the address field to open the location in Google Maps.
-      </p>
-      <p>
-        The copy button makes it easy to quickly copy the appointment address to paste
-        it in to the NS reservation site. Then when you search for appointments the
-        available one should be right at the top of the results!
+        This app helps you find the latest vaccine appointments in the Halifax region so you can
+        quickly book through the provincial website. Click the teal buttons under "Earliest Appt."
+        to view all available times and click the address field to open the location in Google Maps.
       </p>
       <p>Hope this helps you find an appointment!</p>
     </div>
@@ -343,7 +338,7 @@ export default {
           <div class="copy-tootlip">{{ data.label }}
             <span>
               The copy button allows you to quickly copy the address for easy pasting
-              in to the province's vaccine booking website.
+              into the province's vaccine booking website.
             </span>
           </div>
         </template>
