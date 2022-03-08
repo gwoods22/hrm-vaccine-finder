@@ -122,7 +122,7 @@ export default {
         'addresses': addresses              
       };
 
-     axios.post(AWS_URL + 'distance', data, {
+     axios.post(AWS_URL + 'distances', data, {
         'headers': headers
       }).then(response => {
         vue.loadingDirections = false;
