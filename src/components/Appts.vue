@@ -22,7 +22,7 @@ export default {
         loadingDirections: true,
         loadingAppts: true,
         noResults: false,
-        lastupdated: '',
+        lastUpdated: '',
         errorMessage: '',
         sortKey: 'utcTime',
         selectedLocation: {},
@@ -97,7 +97,7 @@ export default {
 
           let now = new Date
           let time = now.toLocaleString().split(', ')[1].split(':')      
-          vue.lastupdated = 'Today at ' + time[0]+':'+time[1]+' '+time[2].split(' ')[1].toLowerCase()
+          vue.lastUpdated = 'Today at ' + time[0]+':'+time[1]+' '+time[2].split(' ')[1].toLowerCase()
           
           let addresses = locations.map(x => ({
             mapsLocationString: x.mapsLocationString,
@@ -286,7 +286,7 @@ export default {
         data to a database to show how the system works.
       </p>
     </b-alert>
-    <p v-if="!loadingDirections && !noResults">Last updated: {{lastupdated}}</p>
+    <p v-if="!loadingDirections && !noResults">Last updated: {{lastUpdated}}</p>
     <div class="d-flex justify-content-center mb-3" v-if="loadingDirections">
       <span class="mr-3">Getting Distances</span>
       <b-spinner label="Loading..."></b-spinner>
