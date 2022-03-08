@@ -154,8 +154,8 @@ export default {
         vue.loadingAppts = false;
 
         // Error check
-        if ('appts' in response.data) {
-          let appts = response.data.appts;
+        if ('allAppts' in response.data) {
+          let appts = response.data.allAppts;
 
           for (let i=0; i<vue.tableData.length; i++) {
             let appt = appts.find(x => x.id === vue.tableData[i].id);
