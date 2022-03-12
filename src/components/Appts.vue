@@ -181,7 +181,7 @@ export default {
         }
       })
       .catch(error => {
-        console.log('Locations request error');
+        console.log('Appointments request error');
         console.log(error);
       }); 
     },
