@@ -27,3 +27,5 @@ pnpm-debug.log*
 # Personal files
 TODO.md
 reference-files/
+
+.env

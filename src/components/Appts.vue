@@ -8,7 +8,7 @@ const TEST_MODE = true
 const CACHE_LOCATIONS = true
 
 const headers =  {
-  'x-api-key': 'ca7nZ35PtD5lxNQQEW5rE5aP8416btyhce6RJPRa',
+  'x-api-key': process.env.VUE_APP_API_KEY,
   'Content-Type': 'application/json',
 };
 
