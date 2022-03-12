@@ -5,11 +5,11 @@ const Cookies = require('js-cookie')
 const AWS_URL = 'https://rxaf4n42ye.execute-api.us-east-2.amazonaws.com/prod/'
 
 const TEST_MODE = true
+const CACHE_LOCATIONS = true
 
 const headers =  {
   'x-api-key': 'ca7nZ35PtD5lxNQQEW5rE5aP8416btyhce6RJPRa',
   'Content-Type': 'application/json',
-  'Test-Mode': TEST_MODE
 };
 
 export default {
@@ -81,9 +81,13 @@ export default {
         this.hrm = false
       }
       
-      let url = AWS_URL + 'locations' + window.location.search;
+      let url = AWS_URL + 'locations';
       axios.get(url, {
-        'headers': headers
+        'headers': {
+          ...headers,
+          'Test-Mode': TEST_MODE,
+          'All-Locations': allLocations
+        }
       }).then(response => {
         console.log(response.data);
         let locations = response.data.locations;
@@ -123,7 +127,10 @@ export default {
       };
 
      axios.post(AWS_URL + 'distances', data, {
-        'headers': headers
+        'headers': {
+          ...headers,
+          'Cache-Locations': CACHE_LOCATIONS
+        }
       }).then(response => {
         vue.loadingDirections = false;
 
@@ -149,7 +156,10 @@ export default {
       }
 
       axios.post(AWS_URL + 'appointments', data, {
-        'headers': headers
+        'headers': {
+          ...headers,
+          'Test-Mode': TEST_MODE,
+        }
       }).then(response => {
         vue.loadingAppts = false;
 
