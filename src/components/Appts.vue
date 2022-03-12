@@ -327,7 +327,7 @@ export default {
         </template>
         <!-- Distance header tooltip -->
         <template #head(distance)="data">
-          <div class="copy-tootlip">{{ data.label }}
+          <div class="copy-tooltip">{{ data.label }}
             <span>
               Driving distance calculated from downtown Halifax, NS.
             </span>
@@ -335,7 +335,7 @@ export default {
         </template>
         <!-- Copy header tooltip -->
         <template #head(copy)="data">
-          <div class="copy-tootlip">{{ data.label }}
+          <div class="copy-tooltip">{{ data.label }}
             <span>
               The copy button allows you to quickly copy the address for easy pasting
               into the province's vaccine booking website.
@@ -419,7 +419,7 @@ export default {
   .table-responsive {
     overflow-x: visible;
   }
-  .copy-tootlip {
+  .copy-tooltip {
     position: relative;
     cursor: pointer;
     display: inline-block;
