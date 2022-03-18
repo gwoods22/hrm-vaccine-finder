@@ -58,7 +58,6 @@ export default {
   },
   props: {},
   mounted () {    
-    let returningUser = true
     if (Cookies.get('returningUser') !== 'true') {
       this.$bvModal.show('help-modal')
       Cookies.set('returningUser', true, { expires: 365 });
@@ -153,7 +152,6 @@ export default {
           vue.tableData[i].distance = dist.distance;
           vue.tableData[i].rawDistance = dist.rawDistance;
         }
-        vue.$root.$emit('bv::refresh::table', 'data-table')
       })
       .catch(error => {
         console.log('Distances request error');
@@ -190,7 +188,6 @@ export default {
             vue.tableData[i].apptTime = appt.earliest.apptTime;
             vue.tableData[i].appts = appt.appts;
           }
-          vue.$root.$emit('bv::refresh::table', 'data-table')
         } else if (response.data.errorType === 'REQUEST ERROR') {
           console.log(response.data.errorMessage)
           console.log('Appts field:');
