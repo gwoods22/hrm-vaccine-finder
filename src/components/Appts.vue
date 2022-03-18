@@ -17,14 +17,19 @@ export default {
   data() {
       return {
         testMode: TEST_MODE,
+        // return just HRM appts or all of Nova Scotia
         hrm: true,  
+        // table waiting for data
         isBusy: true,
         loadingDirections: true,
         loadingAppts: true,
         noResults: false,
         lastUpdated: '',
+        // popup modal error message
         errorMessage: '',
+        // table sort key
         sortKey: 'utcTime',
+        // specified location used to load appointment modal data
         selectedLocation: {},
         tableData: [],
         fields: [
@@ -72,7 +77,10 @@ export default {
     })
   },
   methods: {
-    pullData() {
+    /** 
+     * Get vaccine appointment locations in the region
+     */
+    getLocations() {
       const vue = this;
 
       let allLocations =  (new URLSearchParams(window.location.search)).get('all') === 'true';
@@ -118,6 +126,11 @@ export default {
         console.log(error);
       });
     },
+    /**
+     * Get driving distances between home address and each passed address
+     *
+     * @param {object[]} addresses Array of address objects
+     */
     getDistances(addresses) {
       const vue = this;
 
@@ -148,6 +161,11 @@ export default {
         console.log(error);
       });
     },
+    /**
+     * Get appointment times for passed vaccine locations
+     *
+     * @param {string[]} ids Array of location IDs
+     */
     getAppts(ids) {
       const vue = this;
 
@@ -195,7 +213,15 @@ export default {
         console.log(error);
       }); 
     },
-    openModal(id) {
+    /**
+     * Open modal containing appointment times
+     * 
+     * If there are more appointments than can fit in the modal,
+     * truncate appointments list and add a 'more...' dummy time.
+     *
+     * @param {number} id ID of the location to display appointments
+     */
+    openApptModal(id) {
       this.selectedLocation = this.tableData.find(x => x.id === id);
       if (this.selectedLocation.appts.length > 56) {
         this.selectedLocation.appts = this.selectedLocation.appts.slice(0,56)
@@ -205,6 +231,11 @@ export default {
         })
       }
     },
+    /**
+     * Shorten full address to street address and copy to clipboard
+     *
+     * @param {string} address Full postal address
+     */
     copyAddress(address) {
       let shortAddress;
       if (address.split(', ').length === 1) {
