@@ -87,8 +87,7 @@ export default {
         this.hrm = false
       }
       
-      let url = AWS_URL + 'locations';
-      axios.get(url, {
+      axios.get(AWS_URL + 'locations', {
         'headers': {
           ...headers,
           'Test-Mode': TEST_MODE,
@@ -242,7 +241,7 @@ export default {
 
       navigator.clipboard.writeText(shortAddress).then(() => {
         console.log('Async: Copying to clipboard was successful!');
-      }, function(err) {
+      }, err => {
         console.error('Async: Could not copy text: ', err);
       });
     }
