@@ -222,6 +222,9 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+ @import '../assets/Appts.scss';
+</style>
 <template>
 <div>
   <b-modal 
@@ -386,98 +389,3 @@ export default {
   </footer>
 </div>
 </template>
-<style lang="scss">
-  html, body {
-    overflow-x: hidden;
-  }
-  body {
-    position: relative;
-    padding-right: 0 !important;
-  }
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  .modal ul {
-    max-height: calc(100vh - 15rem);
-  }
-  tr > td:nth-child(5) button {
-    min-width: 8rem;
-  }
-  li {
-    display: inline-block;
-    margin: 0 10px;
-    width: fit-content;
-  }
-  td {
-    text-align: left;
-  }
-  footer {
-    margin-bottom: 30px;
-  }
-  .alert-warning {
-    display: flex;
-    align-items: center;
-    svg {
-      margin-right: 20px;
-    }
-    p {
-      margin-bottom: 0;
-    }
-  }
-  .table-responsive {
-    overflow-x: visible;
-  }
-  .copy-tooltip {
-    position: relative;
-    cursor: pointer;
-    display: inline-block;
-
-    border-bottom: 1px dotted #888;
-    text-decoration: none;
-    margin-bottom: -1px;
-
-    &:hover span {
-      opacity: 1;
-      z-index: 999;
-    }
-    & span {
-      opacity: 0;
-      transition: 0.25s;
-      position: absolute;
-      left: -115px;
-      padding: 10px;
-      top: 45px;
-      width: 270px;
-      z-index: -1;
-      border-radius: 10px;
-      color: #fff;
-      background-color: #149baf;
-
-      &::after{
-        content: '';
-        position: absolute;
-        top: -15px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 0; 
-        height: 0; 
-        border-left: 15px solid transparent;
-        border-right: 15px solid transparent;
-        border-bottom: 15px solid #149baf;
-      }
-    }
-  }
-  @media (max-width: 480px) {
-    .alert-warning {
-      display: block;
-      text-align: justify;
-      & p {
-        display: inline;
-      }
-      & svg {
-        margin-right: 10px;
-      }
-    }
-  }
-</style>
