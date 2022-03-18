@@ -17,8 +17,6 @@ export default {
   data() {
       return {
         testMode: TEST_MODE,
-        // return just HRM appts or all of Nova Scotia
-        hrm: true,  
         // table waiting for data
         isBusy: true,
         loadingDirections: true,
@@ -81,17 +79,12 @@ export default {
     getLocations() {
       const vue = this;
 
-      let allLocations =  (new URLSearchParams(window.location.search)).get('all') === 'true';
-      if (allLocations) {
-        this.sortKey = 'distance'
-        this.hrm = false
-      }
+      vue.testMode =  (new URLSearchParams(window.location.search)).get('test') === 'true';
       
       axios.get(AWS_URL + 'locations', {
         'headers': {
           ...headers,
-          'Test-Mode': TEST_MODE,
-          'All-Locations': allLocations
+          'Test-Mode': TEST_MODE
         }
       }).then(response => {
         console.log(response.data);
@@ -408,8 +401,6 @@ export default {
     </div>
   </div>
   <footer class="text-center">
-    <p v-if="hrm && false"><a href="/?all=true">See all NS appointments.</a></p>
-    <p v-if="!hrm"><a href="/">Just see HRM appointments.</a></p>
     <p>Made by <a target="_blank" rel="noopener noreferrer" href="http://github.com/gwoods22/">Graeme Woods</a></p>
     <router-link to="/privacy">Privacy Policy</router-link>
   </footer>
