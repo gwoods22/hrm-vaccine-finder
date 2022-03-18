@@ -25,6 +25,13 @@
   }
   footer {
     margin-bottom: 30px;
+    .link {
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+    p {
+      font-size: 0.9rem;
+    }
   }
   .alert-warning {
     display: flex;
