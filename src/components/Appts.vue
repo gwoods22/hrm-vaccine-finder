@@ -181,12 +181,12 @@ export default {
           let problem = vue.tableData.find(x => x.id === response.data.id);
           console.log('Problem location:');
           console.log(problem);
-          this.errorMessage = 'This was an error getting the appointment times.'
+          this.errorMessage = 'There was an error getting the appointment times.'
           this.$bvModal.show('error-modal')
         } else {
           console.log('Error during appointments request');
           console.log(response.data.appts);
-          this.errorMessage = 'This was an error getting the appointment times.'
+          this.errorMessage = 'There was an error getting the appointment times.'
           this.$bvModal.show('error-modal')
         }
       })
