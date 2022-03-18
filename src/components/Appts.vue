@@ -218,14 +218,14 @@ export default {
      */
     openApptModal(id) {
       this.selectedLocation = this.tableData.find(x => x.id === id);
-      if (this.selectedLocation.appts.length > 56) {
-        this.selectedLocation.appts = this.selectedLocation.appts.slice(0,56)
+      if (this.selectedLocation.appts.length > 62) {
+        this.selectedLocation.appts = this.selectedLocation.appts.slice(0,62)
         this.selectedLocation.appts.push({
           apptTime: 'more...',
-          utcTime: '2022-01-01T00:00:00.000Z'
+          utcTime: ''
         })
       }
-    },
+    },    
     /**
      * Shorten full address to street address and copy to clipboard
      *
