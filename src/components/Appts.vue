@@ -324,7 +324,6 @@ export default {
             {{ data.item.maxAge === null ? `${data.item.minAge}+` : `${data.item.minAge} - ${data.item.maxAge}` }}
           </p>
         </template>
-      >
         <!-- Address column -->
         <template #cell(address)="data">
           <a 
@@ -335,24 +334,7 @@ export default {
             {{ data.value }}
           </a>
         </template>
-        <!-- Distance header tooltip -->
-        <template #head(distance)="data">
-          <div class="copy-tooltip">{{ data.label }}
-            <span>
-              Driving distance calculated from downtown Halifax, NS.
-            </span>
-          </div>
-        </template>
-        <!-- Copy header tooltip -->
-        <template #head(copy)="data">
-          <div class="copy-tooltip">{{ data.label }}
-            <span>
-              The copy button allows you to quickly copy the address for easy pasting
-              into the province's vaccine booking website.
-            </span>
-          </div>
-        </template>
-        <!-- Copy address button -->
+        <!-- Copy address button column -->
         <template #cell(copy)="data">
           <b-button variant="info" size="sm" @click="copyAddress(data.item.address)">
             <font-awesome-icon icon="copy" />
@@ -374,6 +356,23 @@ export default {
           >
             {{ data.item.apptTime }}
           </b-button> 
+        </template>
+        <!-- Distance header tooltip -->
+        <template #head(distance)="data">
+          <div class="copy-tooltip">{{ data.label }}
+            <span>
+              Driving distance calculated from downtown Halifax, NS.
+            </span>
+          </div>
+        </template>
+        <!-- Copy header tooltip -->
+        <template #head(copy)="data">
+          <div class="copy-tooltip">{{ data.label }}
+            <span>
+              The copy button allows you to quickly copy the address for easy pasting
+              into the province's vaccine booking website.
+            </span>
+          </div>
         </template>
       </b-table>
       <h4 v-if="noResults">No vaccine locations found</h4>
