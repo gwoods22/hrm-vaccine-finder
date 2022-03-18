@@ -4,7 +4,7 @@ const Cookies = require('js-cookie')
 
 const AWS_URL = 'https://rxaf4n42ye.execute-api.us-east-2.amazonaws.com/prod/'
 
-const SAVED_DISTANCES = true
+const SAVED_DISTANCES = false
 
 const headers =  {
   'x-api-key': process.env.VUE_APP_API_KEY,
@@ -298,7 +298,7 @@ export default {
   >
     <div>
       <p>
-        This app helps you find the latest vaccine appointments in the Halifax region so you can
+        This app helps you find the latest vaccine appointments in Nova Scotia so you can
         quickly book through the provincial website. Click the teal buttons under "Earliest Appt."
         to view all available times and click the address field to open the location in Google Maps.
       </p>
@@ -307,13 +307,13 @@ export default {
   </b-modal>
 
   <div class="container">
-    <h1>HRM Vaccine Appointments</h1>
+    <h1>NS Vaccine Appointments</h1>
     <p>Book online with a N.S Health card <a target="_blank" rel="noopener noreferrer" href="https://novascotia.flow.canimmunize.ca/en/9874123-19-7418965">here</a> or book by phone at <a href="tel:+1-833-797-7772">1-833-797-7772</a>.</p>
     <b-alert show variant="warning" v-bind:class="{ 'd-none': !testMode }">
       <font-awesome-icon icon="exclamation-triangle" />
       <p>
         <span class="font-weight-bold">This data is now out of date.</span>
-        As the Halifax region's initial vaccine program winds down, there are less appointments available.
+        As Nova Scotia's initial vaccine program winds down, there are less appointments available.
         To keep this app working as a proof of concept, I've saved previous publicly available appointment
         data to a database to show how the system works.
       </p>
