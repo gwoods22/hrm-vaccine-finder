@@ -125,7 +125,7 @@ export default {
       const vue = this;
 
       let data = {
-        'home': '5691 Inglis St, Halifax',
+        'home': vue.testMode ? '5691 Inglis St, Halifax, NS' : '424 Charlotte St, Sydney, NS',
         'addresses': addresses              
       };
 
@@ -383,7 +383,8 @@ export default {
         <template #head(distance)="data">
           <div class="copy-tooltip">{{ data.label }}
             <span>
-              Driving distance calculated from downtown Halifax, NS.
+              Driving distance calculated from
+              {{testMode ? 'downtown Halifax, NS.' : 'downtown Sydney, NS.'}}
             </span>
           </div>
         </template>
