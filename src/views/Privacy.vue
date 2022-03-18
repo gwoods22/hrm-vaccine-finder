@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>HRM Vaccine Appointments</h1>
+    <h1>NS Vaccine Appointments</h1>
     <h4>The World's Greatest Privacy Policy</h4>
     <p>We don't store your data, <span class="font-weight-bold">period</span>.</p>
     <p>
