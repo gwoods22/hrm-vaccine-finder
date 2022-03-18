@@ -4,7 +4,6 @@ const Cookies = require('js-cookie')
 
 const AWS_URL = 'https://rxaf4n42ye.execute-api.us-east-2.amazonaws.com/prod/'
 
-const TEST_MODE = true
 const SAVED_DISTANCES = true
 
 const headers =  {
@@ -16,7 +15,8 @@ export default {
   name: 'Appts',
   data() {
       return {
-        testMode: TEST_MODE,
+        // request previously saved appointment data
+        testMode: false,
         // table waiting for data
         isBusy: true,
         loadingDirections: true,
@@ -84,7 +84,7 @@ export default {
       axios.get(AWS_URL + 'locations', {
         'headers': {
           ...headers,
-          'Test-Mode': TEST_MODE
+          'Test-Mode': vue.testMode
         }
       }).then(response => {
         console.log(response.data);
@@ -165,7 +165,7 @@ export default {
       axios.post(AWS_URL + 'appointments', data, {
         'headers': {
           ...headers,
-          'Test-Mode': TEST_MODE,
+          'Test-Mode': vue.testMode,
         }
       }).then(response => {
         vue.loadingAppts = false;
