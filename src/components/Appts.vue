@@ -5,7 +5,7 @@ const Cookies = require('js-cookie')
 const AWS_URL = 'https://rxaf4n42ye.execute-api.us-east-2.amazonaws.com/prod/'
 
 const TEST_MODE = true
-const CACHE_LOCATIONS = true
+const SAVED_DISTANCES = true
 
 const headers =  {
   'x-api-key': process.env.VUE_APP_API_KEY,
@@ -62,17 +62,16 @@ export default {
     if (Cookies.get('returningUser') !== 'true') {
       this.$bvModal.show('help-modal')
       Cookies.set('returningUser', true, { expires: 365 });
-      returningUser = false
     } else {
-      this.pullData()
+      this.getLocations()
     }
 
     this.$root.$on('bv::modal::hide', bvEvent => {
       if (bvEvent.componentId === 'error-modal' && bvEvent.trigger === 'ok') {
         location.reload();
       }
-      if (bvEvent.componentId === 'help-modal' && !returningUser) {
-        this.pullData()
+      if (bvEvent.componentId === 'help-modal') {
+        this.getLocations()
       }
     })
   },
@@ -118,7 +117,7 @@ export default {
           this.getDistances(addresses)
 
           let ids = locations.map(x => x.id);
-          this.getAppts(ids)
+          this.getAppointments(ids)
         }
       })
       .catch(error => {
@@ -142,7 +141,7 @@ export default {
      axios.post(AWS_URL + 'distances', data, {
         'headers': {
           ...headers,
-          'Cache-Locations': CACHE_LOCATIONS
+          'Saved-Distances': SAVED_DISTANCES
         }
       }).then(response => {
         vue.loadingDirections = false;
@@ -166,7 +165,7 @@ export default {
      *
      * @param {string[]} ids Array of location IDs
      */
-    getAppts(ids) {
+    getAppointments(ids) {
       const vue = this;
 
       let data = { 
@@ -196,9 +195,9 @@ export default {
           console.log(response.data.errorMessage)
           console.log('Appts field:');
           console.log(response.data.appts);
-          let problem = vue.tableData.find(x => x.id === response.data.id);
+          let problemLocation = vue.tableData.find(x => x.id === response.data.id);
           console.log('Problem location:');
-          console.log(problem);
+          console.log(problemLocation);
           this.errorMessage = 'There was an error getting the appointment times.'
           this.$bvModal.show('error-modal')
         } else {
@@ -385,7 +384,7 @@ export default {
             variant="info"
             size="sm"
             v-if="!loadingAppts" 
-            @click="openModal(data.item.id)" 
+            @click="openApptModal(data.item.id)" 
             v-b-modal.appt-modal
           >
             {{ data.item.apptTime }}
