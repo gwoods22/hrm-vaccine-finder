@@ -29,6 +29,8 @@
   .alert-warning {
     display: flex;
     align-items: center;
+    max-width: 900px;
+    margin: 0 auto 1rem;
     svg {
       margin-right: 20px;
     }
