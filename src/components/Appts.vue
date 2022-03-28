@@ -143,7 +143,8 @@ export default {
           let dist = distances.find(x => x.id === vue.tableData[i].id);
           vue.tableData[i].distance = dist.distance;
           vue.tableData[i].rawDistance = dist.rawDistance;
-        }
+        }        
+        this.$refs.table.refresh()
       })
       .catch(error => {
         console.log('Distances request error');
@@ -180,6 +181,7 @@ export default {
             vue.tableData[i].apptTime = appt.earliest.apptTime;
             vue.tableData[i].appts = appt.appts;
           }
+          this.$refs.table.refresh()
         } else if (response.data.errorType === 'REQUEST ERROR') {
           console.log(response.data.errorMessage)
           console.log('Appts field:');
