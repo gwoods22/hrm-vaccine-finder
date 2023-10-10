@@ -16,7 +16,7 @@ export default {
   data() {
       return {
         // request previously saved appointment data
-        testMode: false,
+        testMode: true,
         // table waiting for data
         isBusy: true,
         loadingDirections: true,
@@ -79,7 +79,7 @@ export default {
     getLocations() {
       const vue = this;
 
-      vue.testMode =  (new URLSearchParams(window.location.search)).get('test') === 'true';
+      vue.testMode =  (new URLSearchParams(window.location.search)).get('liveData') !== 'true';
       
       axios.get(AWS_URL + 'locations', {
         'headers': {
