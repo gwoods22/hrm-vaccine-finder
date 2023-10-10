@@ -406,8 +406,8 @@ export default {
   <footer class="text-center">
     <p>Made by <a target="_blank" rel="noopener noreferrer" href="http://github.com/gwoods22/">Graeme Woods</a></p>
     <router-link class="link" to="/privacy">Privacy Policy</router-link>
-    <p v-if="!testMode"><a href="/?test=true">See example appointment data.</a></p>
-    <p v-if="testMode"><a href="/">See real appointments.</a></p>
+    <!-- <p v-if="!testMode"><a href="/">See example appointment data.</a></p>
+    <p v-if="testMode"><a href="/?liveData=true">See real appointments.</a></p> -->
   </footer>
 </div>
 </template>
